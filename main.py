@@ -202,6 +202,7 @@ async def root():
             <p class="subtitle">Yaha pe Aapko Sabhi Batches, Courses milenge unke 😁 Enjoy...</p>
           </div>
         </div>
+        <footer>Agar Es Website ko Band karwana hai toh Telegram pe Proof ke sath Msg karo 🙏🤝</footer>
         <div class="theme-toggle" id="theme-toggle"></div>
       </div>
       <div class="promo-banner">
@@ -209,7 +210,7 @@ async def root():
           <h3 class="promo-title">𝐂𝐡𝐞𝐜𝐤𝐨𝐮𝐭 𝐎𝐮𝐫 𝐌𝐚𝐢𝐧 𝐖𝐞𝐛𝐬𝐢𝐭𝐞 ✅</h3>
           <p class="promo-text">Discover amazing free other Websites 🔥</p>
         </div>
-        <a href="https://yashyasag.github.io/hiddens" class="promo-link">Visit Now</a>
+        <a href="https://opmasterweb.github.io/websites/" class="promo-link">Visit Now</a>
       </div>
       <div class="search-row" role="search">
         <label class="sr-only" for="search">Search</label>
@@ -258,7 +259,7 @@ async def root():
         <div id="search-course-load" class="load-more-wrap"></div>
       </section>
     </main>
-    <footer>🔐 Encrypted & Secured API</footer>
+    <footer>Baap ne banayi hai 😁 Padhna Sirf Baketi peli toh Har jagah se daalke nikalunga</footer>
   </div>
   <div class="back-to-top" id="back-to-top">Up</div>
   <div id="modal" class="modal">
