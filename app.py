@@ -73,7 +73,7 @@ async def root():
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Educators · Batches · Courses</title>
+  <title>𝗖𝗛𝗨𝗡𝗔𝗖𝗔𝗗𝗘𝗠𝗬 😈</title>
   <style>
     :root{
       --bg: #0b1020;
@@ -629,8 +629,8 @@ async def root():
         <div class="brand-left">
           <div class="brand-badge" aria-hidden="true">ED</div>
           <div>
-            <div class="title">Educators · Batches · Courses</div>
-            <p class="subtitle">Explore educators, batches, and courses with intelligent search and filtering.</p>
+            <div class="title">CHUNACADEMY 😈</div>
+            <p class="subtitle">Yaha pe Aapko Sabhi Batches, Courses milenge unke 😁 Enjoy...</p>
           </div>
         </div>
         <div class="theme-toggle" id="theme-toggle"></div>
@@ -638,10 +638,10 @@ async def root():
 
       <div class="promo-banner">
         <div class="promo-content">
-          <h3 class="promo-title">Check Out Our New Platform!</h3>
-          <p class="promo-text">Discover amazing courses and batches. Limited time offer!</p>
+          <h3 class="promo-title">𝐂𝐡𝐞𝐜𝐤𝐨𝐮𝐭 𝐎𝐮𝐫 𝐌𝐚𝐢𝐧 𝐖𝐞𝐛𝐬𝐢𝐭𝐞 ✅</h3>
+          <p class="promo-text">Discover amazing free other Websites 🔥</p>
         </div>
-        <a href="https://yourwebsite.com" class="promo-link">Visit Now</a>
+        <a href="https://yashyasag.github.io/hiddens" class="promo-link">Visit Now</a>
       </div>
 
       <div class="search-row" role="search">
