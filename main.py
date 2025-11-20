@@ -83,1386 +83,1330 @@ def get_status(item: dict) -> str | None:
 
 @app.get("/", response_class=HTMLResponse)
 async def root():
-    html_content = """<!DOCTYPE html>
+    html_content = """<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>𝗖𝗛𝗨𝗡𝗔𝗖𝗔𝗗𝗘𝗠𝗬 😈</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-:root {
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --primary-light: #818cf8;
-  --secondary: #ec4899;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-  --dark: #0f172a;
-  --dark-light: #1e293b;
-  --text: #f1f5f9;
-  --text-muted: #94a3b8;
-  --border: #334155;
-  --card-bg: #1e293b;
-  --input-bg: #0f172a;
-  --shadow: rgba(0, 0, 0, 0.3);
-}
-
-[data-theme="light"] {
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --primary-light: #818cf8;
-  --secondary: #ec4899;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-  --dark: #ffffff;
-  --dark-light: #f8fafc;
-  --text: #0f172a;
-  --text-muted: #64748b;
-  --border: #e2e8f0;
-  --card-bg: #ffffff;
-  --input-bg: #f8fafc;
-  --shadow: rgba(0, 0, 0, 0.1);
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  color: var(--text);
-  min-height: 100vh;
-  transition: all 0.3s ease;
-}
-
-[data-theme="light"] body {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Header Styles */
-.header {
-  background: var(--card-bg);
-  border-radius: 20px;
-  padding: 30px;
-  margin-bottom: 30px;
-  box-shadow: 0 10px 30px var(--shadow);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border);
-}
-
-.header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.logo-section {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.logo {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  font-weight: 900;
-  color: white;
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
-}
-
-.logo-text h1 {
-  font-size: 28px;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 5px;
-}
-
-.logo-text p {
-  color: var(--text-muted);
-  font-size: 14px;
-}
-
-/* Theme Toggle */
-.theme-toggle {
-  width: 60px;
-  height: 32px;
-  background: var(--input-bg);
-  border-radius: 16px;
-  position: relative;
-  cursor: pointer;
-  border: 2px solid var(--border);
-  transition: all 0.3s ease;
-}
-
-.theme-toggle:hover {
-  border-color: var(--primary);
-}
-
-.theme-toggle-slider {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border-radius: 50%;
-  top: 2px;
-  left: 2px;
-  transition: transform 0.3s ease;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
-}
-
-.theme-toggle.active .theme-toggle-slider {
-  transform: translateX(28px);
-}
-
-/* Promo Banner */
-.promo-banner {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
-  border-radius: 15px;
-  padding: 20px 25px;
-  margin-bottom: 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  border: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-
-.promo-content h2 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-
-.promo-content p {
-  color: var(--text-muted);
-  font-size: 14px;
-}
-
-.promo-btn {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  padding: 12px 28px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-}
-
-.promo-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
-}
-
-/* Search Bar */
-.search-wrapper {
-  position: relative;
-  margin-bottom: 25px;
-}
-
-.search-input {
-  width: 100%;
-  padding: 16px 50px 16px 20px;
-  background: var(--input-bg);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  font-size: 15px;
-  transition: all 0.3s ease;
-  outline: none;
-}
-
-.search-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-}
-
-.search-icon {
-  position: absolute;
-  right: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  font-size: 20px;
-}
-
-/* Tabs */
-.tabs {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.tab {
-  padding: 12px 24px;
-  background: var(--input-bg);
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  color: var(--text);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 15px;
-}
-
-.tab:hover {
-  border-color: var(--primary-light);
-  transform: translateY(-2px);
-}
-
-.tab.active {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border-color: transparent;
-  color: white;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-}
-
-/* Sub Tabs */
-.sub-tabs {
-  display: flex;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-.sub-tab {
-  padding: 10px 20px;
-  background: var(--input-bg);
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  color: var(--text);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
-}
-
-.sub-tab:hover {
-  border-color: var(--primary-light);
-}
-
-.sub-tab.active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: white;
-}
-
-/* Section Header */
-.section-header {
-  margin: 30px 0 20px 0;
-}
-
-.section-header h2 {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--text);
-}
-
-/* Grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
-  margin-bottom: 30px;
-}
-
-/* Card */
-.card {
-  background: var(--card-bg);
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  transition: all 0.3s ease;
-  cursor: pointer;
-  position: relative;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px var(--shadow);
-  border-color: var(--primary);
-}
-
-.card-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  background: var(--input-bg);
-}
-
-.card-body {
-  padding: 20px;
-}
-
-.card-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-
-.card-subtitle {
-  color: var(--text-muted);
-  font-size: 14px;
-  margin-bottom: 15px;
-}
-
-/* Educator Card Specific */
-.educator-header {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  padding: 20px;
-}
-
-.educator-avatar {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--border);
-}
-
-.educator-info {
-  flex: 1;
-}
-
-.educator-actions {
-  display: flex;
-  gap: 10px;
-  padding: 0 20px 20px 20px;
-}
-
-.action-btn {
-  flex: 1;
-  padding: 12px;
-  background: var(--input-bg);
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  color: var(--text);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-}
-
-.action-btn:hover {
-  border-color: var(--primary);
-  background: var(--primary);
-  color: white;
-}
-
-.action-btn.active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: white;
-}
-
-/* Panel */
-.panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.panel.show {
-  max-height: 1000px;
-}
-
-.panel-content {
-  padding: 0 20px 20px 20px;
-  border-top: 1px solid var(--border);
-  padding-top: 15px;
-}
-
-.list-item {
-  display: flex;
-  gap: 15px;
-  padding: 12px;
-  background: var(--input-bg);
-  border-radius: 10px;
-  margin-bottom: 10px;
-  align-items: center;
-  text-decoration: none;
-  color: var(--text);
-  border: 1px solid var(--border);
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.list-item:hover {
-  border-color: var(--primary);
-  transform: translateX(5px);
-}
-
-.list-item-image {
-  width: 60px;
-  height: 45px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.list-item-title {
-  flex: 1;
-  font-weight: 600;
-}
-
-.list-item-badge {
-  padding: 4px 10px;
-  background: var(--primary);
-  color: white;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-/* Status Badge */
-.status-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  z-index: 10;
-}
-
-.status-badge.live {
-  background: rgba(239, 68, 68, 0.2);
-  color: var(--danger);
-  border: 1px solid var(--danger);
-}
-
-.status-badge.completed {
-  background: rgba(16, 185, 129, 0.2);
-  color: var(--success);
-  border: 1px solid var(--success);
-}
-
-.status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-}
-
-.status-dot.live {
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-/* Info Section */
-.info-grid {
-  display: grid;
-  gap: 10px;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid var(--border);
-}
-
-.info-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-}
-
-.info-label {
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.info-value {
-  color: var(--text);
-  font-weight: 500;
-}
-
-.teacher-tag {
-  margin-top: 12px;
-  padding: 10px 15px;
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid var(--primary);
-  border-radius: 8px;
-  color: var(--primary);
-  font-size: 13px;
-  font-weight: 600;
-}
-
-/* Load More */
-.load-more-wrapper {
-  text-align: center;
-  margin: 30px 0;
-}
-
-.load-more {
-  padding: 14px 32px;
-  background: var(--card-bg);
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 15px;
-}
-
-.load-more:hover {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
-}
-
-/* Back to Top */
-.back-to-top {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
-  font-size: 24px;
-  z-index: 1000;
-}
-
-.back-to-top.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-.back-to-top:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
-}
-
-/* Modal */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  padding: 20px;
-}
-
-.modal.show {
-  display: flex;
-}
-
-.modal-content {
-  background: var(--card-bg);
-  border-radius: 20px;
-  padding: 30px;
-  max-width: 600px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  border: 1px solid var(--border);
-}
-
-.modal-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 35px;
-  height: 35px;
-  background: var(--input-bg);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text);
-  font-size: 20px;
-  border: 1px solid var(--border);
-  transition: all 0.3s ease;
-}
-
-.modal-close:hover {
-  background: var(--danger);
-  border-color: var(--danger);
-  color: white;
-}
-
-.modal-image {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 15px;
-  margin-bottom: 20px;
-}
-
-.watch-btn {
-  width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-}
-
-.watch-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
-}
-
-/* Footer */
-.footer {
-  text-align: center;
-  padding: 30px;
-  color: var(--text-muted);
-  font-size: 14px;
-  margin-top: 50px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .header-top {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .logo-section {
-    flex-direction: column;
-  }
-  
-  .promo-banner {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-/* Hidden */
-[hidden] {
-  display: none !important;
-}
-
-/* Smooth Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--input-bg);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-dark);
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>𝗖𝗛𝗨𝗡𝗔𝗖𝗔𝗗𝗘𝗠𝗬 😈</title>
+  <style>
+    :root{
+      --bg: #0b1020;
+      --surface: #121832;
+      --text: #e8ecf8;
+      --muted: #9aa3b2;
+      --primary: #2ea8ff;
+      --accent: #ff6b6b;
+      --success: #33ff66;
+      --radius: 12px;
+    }
+    [data-theme="light"] {
+      --bg: #f8f9fc;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #666;
+      --primary: #0066cc;
+      --accent: #cc0000;
+      --success: #006600;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height:1.5;
+      overflow-x: hidden;
+      transition: background 0.3s ease;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    #bg-canvas{
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      display:block;
+      background: radial-gradient(circle at 20% 50%, rgba(46,168,255,0.08), transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(255,107,107,0.05), transparent 50%),
+                  var(--bg);
+    }
+
+    .container{
+      max-width: 1100px;
+      margin-inline:auto;
+      padding: 16px;
+    }
+    header{
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-block: 16px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+    }
+    .brand-left { display: flex; align-items: center; gap: 12px; }
+    .brand-badge{
+      width:36px; height:36px; border-radius:999px;
+      display:grid; place-items:center;
+      background: var(--primary);
+      color:#001122; font-weight:800;
+      box-shadow: 0 4px 12px rgba(46,168,255,0.3);
+    }
+    .title{
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .subtitle{ color: var(--muted); font-size: 14px; }
+
+    .theme-toggle {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      width: 48px; height: 28px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .theme-toggle::after {
+      content: '';
+      position: absolute;
+      top: 4px; left: 4px;
+      width: 20px; height: 20px;
+      background: var(--primary);
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+    .theme-toggle.active::after { transform: translateX(20px); }
+
+    .promo-banner{
+      background: linear-gradient(135deg, rgba(46,168,255,0.15), rgba(255,107,107,0.15));
+      border: 1px solid rgba(46,168,255,0.3);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+    .promo-banner::before{
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+      border-radius: 50%;
+    }
+    .promo-content{
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+      z-index: 1;
+    }
+    .promo-title{
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0 0 4px 0;
+      color: var(--text);
+    }
+    .promo-text{
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+    }
+    .promo-link{
+      background: var(--primary);
+      color: #001122;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      z-index: 1;
+    }
+    .promo-link:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46,168,255,0.4);
+      text-decoration: none;
+    }
+
+    .search-row{
+      display:flex; gap:8px; flex-wrap:wrap;
+      align-items:center;
+      background: var(--surface);
+      padding: 8px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .search-row input{
+      flex:1 1 260px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #0f1530;
+      color: var(--text);
+      outline: none;
+    }
+    [data-theme="light"] .search-row input { background: #fff; color: #000; }
+    .search-row input::placeholder{ color: #7b8496; }
+
+    .tabs{
+      display:flex; gap:8px; flex-wrap: wrap;
+      background: var(--surface);
+      padding: 8px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .tab-btn{
+      appearance: none; border: 1px solid rgba(255,255,255,0.08); background: #0f1530;
+      padding: 8px 12px; border-radius: 999px; cursor: pointer;
+      color: var(--text); font-weight: 700;
+      transition: all 0.2s ease;
+    }
+    [data-theme="light"] .tab-btn { background: #eee; }
+    .tab-btn[aria-selected="true"]{
+      background: var(--primary);
+      color: #001122;
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(46,168,255,0.3);
+    }
+
+    .section-head{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+    .section-head h2{
+      margin:0; font-size: 18px; font-weight: 800;
+    }
+    .sub-tabs{
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      margin-bottom: 8px;
+    }
+    .sub-tab-btn{
+      appearance: none;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #0f1530;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    [data-theme="light"] .sub-tab-btn { background: #eee; }
+    .sub-tab-btn.active{
+      background: var(--primary);
+      color: #001122;
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(46,168,255,0.3);
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap:16px;
+      margin-top:16px;
+    }
+    .card{
+      background: linear-gradient(180deg, #0f1530, #0e1429);
+      border-radius: var(--radius);
+      padding: 16px;
+      display:flex; flex-direction: column; gap: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.3s ease;
+      position: relative;
+      cursor: default;
+    }
+    [data-theme="light"] .card { background: #fff; border-color: #ddd; }
+    .card:hover{
+      transform: translateY(-4px);
+      border-color: rgba(46,168,255,0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .status-badge{
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 1;
+    }
+
+    .status-badge.live{
+      background: rgba(255, 51, 51, 0.2);
+      border: 1px solid rgba(255, 51, 51, 0.5);
+      color: #ff6b6b;
+    }
+
+    .status-badge.completed{
+      background: rgba(51, 255, 102, 0.2);
+      border: 1px solid rgba(51, 255, 102, 0.5);
+      color: #33ff66;
+    }
+
+    .status-dot{
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status-dot.live{
+      background: #ff6b6b;
+      animation: pulse-red 1.5s ease-in-out infinite;
+    }
+
+    .status-dot.completed{
+      background: #33ff66;
+    }
+
+    @keyframes pulse-red {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .row{ display:flex; align-items:center; gap:12px; }
+    .avatar{
+      width:64px; height:64px; border-radius: 999px; flex: 0 0 64px;
+      object-fit: cover; border: 1px solid rgba(255,255,255,0.08);
+      background: #1a2142;
+    }
+    [data-theme="light"] .avatar { border-color: #ccc; background: #f0f0f0; }
+    .thumb{
+      width:100%; height:140px; object-fit: cover; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.06); background:#10152c;
+    }
+    [data-theme="light"] .thumb { border-color: #ddd; background: #f9f9f9; }
+    .meta h3{ margin:0; font-size:18px; font-weight:800; }
+    .meta p{ margin:0; color: var(--muted); font-size: 13px; }
+
+    .dates{
+      display: flex; flex-direction: column; gap: 6px;
+      font-size: 12px; color: var(--muted);
+      border-top: 1px dashed rgba(255,255,255,0.08);
+      padding-top: 8px;
+      margin-top: 8px;
+    }
+    .date-item{
+      display: flex; justify-content: space-between; gap: 8px;
+    }
+    .date-label{ font-weight: 600; color: var(--text); }
+
+    .teachers-section {
+      margin-top: 8px;
+    }
+    .teacher-box {
+      background: rgba(46,168,255,0.2);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid rgba(46,168,255,0.3);
+    }
+
+    .actions{ 
+      display:flex; 
+      gap:8px; 
+      flex-wrap: wrap; 
+      margin-top: 8px;
+    }
+    .pill{
+      flex:1 1 auto; 
+      min-width: 120px;
+      display:flex; 
+      align-items:center; 
+      justify-content:center;
+      padding: 10px 12px; 
+      border-radius: 10px;
+      background: #0f1530; 
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text); 
+      font-weight: 700; 
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    [data-theme="light"] .pill { background: #eee; }
+    .pill:hover{ 
+      border-color: rgba(46,168,255,0.45);
+      background: #121832;
+      transform: translateY(-2px);
+    }
+    [data-theme="light"] .pill:hover { background: #ddd; }
+    .pill.active{
+      background: var(--primary);
+      color: #001122;
+      border-color: transparent;
+    }
+
+    .panel{
+      border-top: 1px dashed rgba(255,255,255,0.08);
+      padding-top: 12px;
+      margin-top: 12px;
+      display: none;
+    }
+    .panel.show{ display:block; }
+    .list{
+      display:flex; 
+      flex-direction: column; 
+      gap:8px;
+    }
+    .list-item{
+      background:#0f1530; 
+      border:1px solid rgba(255,255,255,0.08);
+      padding:10px 12px; 
+      border-radius: 8px;
+      display:grid; 
+      grid-template-columns: 56px 1fr auto; 
+      gap:10px; 
+      align-items:center;
+      text-decoration:none; 
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    [data-theme="light"] .list-item { background: #fff; border-color: #ddd; }
+    .list-item:hover{ 
+      border-color: rgba(46,168,255,0.35);
+      transform: translateX(5px);
+    }
+
+    .list-item-status{
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .list-item-status.live{
+      background: #ff6b6b;
+      animation: pulse-red 1.5s ease-in-out infinite;
+    }
+
+    .list-item-status.completed{
+      background: #33ff66;
+    }
+
+    .mini{
+      width:56px; 
+      height:40px; 
+      object-fit: cover; 
+      border-radius: 6px; 
+      background:#0e1328;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    [data-theme="light"] .mini { background: #f0f0f0; border-color: #ccc; }
+    .list .right-hint{ 
+      color: var(--muted); 
+      font-size: 12px; 
+    }
+
+    .load-more-wrap{
+      display:flex; 
+      justify-content:center; 
+      margin-top: 16px;
+    }
+    .load-more{
+      appearance:none; 
+      border:1px solid rgba(255,255,255,0.12);
+      background:#0f1530; 
+      color:var(--text); 
+      font-weight:700;
+      padding:10px 20px; 
+      border-radius: 10px; 
+      cursor:pointer;
+      transition: all 0.2s ease;
+    }
+    [data-theme="light"] .load-more { background: #eee; border-color: #ccc; }
+    .load-more:hover{ 
+      border-color: rgba(46,168,255,0.5);
+      background: #121832;
+      transform: translateY(-2px);
+    }
+    [data-theme="light"] .load-more:hover { background: #ddd; }
+
+    footer{
+      margin-top: 40px; 
+      padding: 24px 0; 
+      color: var(--muted); 
+      font-size: 14px; 
+      text-align:center;
+    }
+
+    .sr-only{
+      position: absolute; 
+      width: 1px; 
+      height: 1px; 
+      padding: 0; 
+      margin: -1px;
+      overflow: hidden; 
+      clip: rect(0, 0, 0, 0); 
+      white-space: nowrap; 
+      border: 0;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 48px;
+      height: 48px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    .back-to-top.show { opacity: 1; visibility: visible; }
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(46,168,255,0.5);
+    }
+
+    .modal {
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.show {
+      display: flex;
+    }
+    .modal-content {
+      background: var(--surface);
+      padding: 20px;
+      border-radius: 12px;
+      position: relative;
+      max-width: 500px;
+      width: 90%;
+    }
+    [data-theme="light"] .modal-content { background: #fff; }
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 24px;
+      color: var(--muted);
+    }
+    .watch-btn {
+      margin-top: 16px;
+      background: var(--primary);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      width: 100%;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .watch-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46,168,255,0.4);
+    }
+  </style>
 </head>
 <body data-theme="dark">
-<div class="container">
-  <!-- Header -->
-  <div class="header">
-    <div class="header-top">
-      <div class="logo-section">
-        <div class="logo">C</div>
-        <div class="logo-text">
-          <h1>CHUNACADEMY</h1>
-          <p>Your Ultimate Learning Platform 🚀</p>
+  <div id="bg-canvas" aria-hidden="true"></div>
+
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brand-left">
+          <div class="brand-badge" aria-hidden="true">ED</div>
+          <div>
+            <div class="title">CHUNACADEMY 😈</div>
+            <p class="subtitle">Yaha pe Aapko Sabhi Batches, Courses milenge unke 😁 Enjoy...</p>
+          </div>
         </div>
+        <div class="theme-toggle" id="theme-toggle"></div>
       </div>
-      <div class="theme-toggle" id="themeToggle">
-        <div class="theme-toggle-slider"></div>
+
+      <div class="promo-banner">
+        <div class="promo-content">
+          <h3 class="promo-title">𝐂𝐡𝐞𝐜𝐤𝐨𝐮𝐭 𝐎𝐮𝐫 𝐌𝐚𝐢𝐧 𝐖𝐞𝐛𝐬𝐢𝐭𝐞 ✅</h3>
+          <p class="promo-text">Discover amazing free other Websites 🔥</p>
+        </div>
+        <a href="https://yashyasag.github.io/hiddens" class="promo-link">Visit Now</a>
       </div>
-    </div>
-    
-    <!-- Promo Banner -->
-    <div class="promo-banner">
-      <div class="promo-content">
-        <h2>🎯 Explore Our Main Website</h2>
-        <p>Discover amazing free resources and tools</p>
+
+      <div class="search-row" role="search">
+        <label class="sr-only" for="search">Search</label>
+        <input id="search" placeholder="Search keyword (e.g., 'Rahul', 'Physics', 'Batch A')" />
       </div>
-      <a href="https://yashyasag.github.io/hiddens" class="promo-btn">Visit Now →</a>
-    </div>
-    
-    <!-- Search -->
-    <div class="search-wrapper">
-      <input type="text" class="search-input" id="searchInput" placeholder="Search educators, batches, courses...">
-      <span class="search-icon">🔍</span>
-    </div>
-    
-    <!-- Tabs -->
-    <div class="tabs">
-      <button class="tab active" data-tab="educators">👨‍🏫 Educators</button>
-      <button class="tab" data-tab="batches">📚 Batches</button>
-      <button class="tab" data-tab="courses">🎓 Courses</button>
+
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button class="tab-btn" role="tab" aria-selected="true" id="tab-educators">Educators</button>
+        <button class="tab-btn" role="tab" aria-selected="false" id="tab-batches">Batches</button>
+        <button class="tab-btn" role="tab" aria-selected="false" id="tab-courses">Courses</button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section id="panel-educators" role="tabpanel">
+        <div class="section-head">
+          <h2>Educators</h2>
+        </div>
+        <div id="edu-grid" class="grid"></div>
+        <div id="edu-load" class="load-more-wrap"></div>
+      </section>
+
+      <section id="panel-batches" role="tabpanel" hidden>
+        <div class="section-head">
+          <h2>Batches</h2>
+        </div>
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" data-filter="live">Live Running</button>
+          <button class="sub-tab-btn" data-filter="completed">Completed</button>
+        </div>
+        <div id="batch-grid" class="grid"></div>
+        <div id="batch-load" class="load-more-wrap"></div>
+      </section>
+
+      <section id="panel-courses" role="tabpanel" hidden>
+        <div class="section-head">
+          <h2>Courses</h2>
+        </div>
+        <div class="sub-tabs">
+          <button class="sub-tab-btn active" data-filter="live">Live Running</button>
+          <button class="sub-tab-btn" data-filter="completed">Completed</button>
+        </div>
+        <div id="course-grid" class="grid"></div>
+        <div id="course-load" class="load-more-wrap"></div>
+      </section>
+
+      <section id="panel-search" hidden>
+        <div class="section-head">
+          <h2>Search Results</h2>
+        </div>
+
+        <div class="section-head"><h2>Educators</h2></div>
+        <div id="search-edu" class="grid"></div>
+        <div id="search-edu-load" class="load-more-wrap"></div>
+
+        <div class="section-head"><h2>Batches</h2></div>
+        <div id="search-batch" class="grid"></div>
+        <div id="search-batch-load" class="load-more-wrap"></div>
+
+        <div class="section-head"><h2>Courses</h2></div>
+        <div id="search-course" class="grid"></div>
+        <div id="search-course-load" class="load-more-wrap"></div>
+      </section>
+    </main>
+
+    <footer>
+      Click on any educator, batch, or course to navigate and explore.
+    </footer>
+  </div>
+
+  <div class="back-to-top" id="back-to-top">↑</div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="modal-close" class="close">×</span>
+      <div id="modal-body"></div>
+      <button id="modal-watch" class="watch-btn">CLICK TO WATCH LECTURES</button>
     </div>
   </div>
-  
-  <!-- Main Content -->
-  <main id="mainContent">
-    <!-- Educators Section -->
-    <section id="educatorsSection">
-      <div class="section-header">
-        <h2>📖 All Educators</h2>
-      </div>
-      <div class="grid" id="educatorsGrid"></div>
-      <div class="load-more-wrapper" id="educatorsLoadMore"></div>
-    </section>
-    
-    <!-- Batches Section -->
-    <section id="batchesSection" hidden>
-      <div class="section-header">
-        <h2>📚 Batches</h2>
-      </div>
-      <div class="sub-tabs">
-        <button class="sub-tab active" data-filter="live">🔴 Live Running</button>
-        <button class="sub-tab" data-filter="completed">✅ Completed</button>
-      </div>
-      <div class="grid" id="batchesGrid"></div>
-      <div class="load-more-wrapper" id="batchesLoadMore"></div>
-    </section>
-    
-    <!-- Courses Section -->
-    <section id="coursesSection" hidden>
-      <div class="section-header">
-        <h2>🎓 Courses</h2>
-      </div>
-      <div class="sub-tabs">
-        <button class="sub-tab active" data-filter="live">🔴 Live Running</button>
-        <button class="sub-tab" data-filter="completed">✅ Completed</button>
-      </div>
-      <div class="grid" id="coursesGrid"></div>
-      <div class="load-more-wrapper" id="coursesLoadMore"></div>
-    </section>
-    
-    <!-- Search Results Section -->
-    <section id="searchSection" hidden>
-      <div class="section-header">
-        <h2>🔍 Search Results</h2>
-      </div>
-      
-      <h3 style="margin: 20px 0 10px 0; color: var(--text);">Educators</h3>
-      <div class="grid" id="searchEducatorsGrid"></div>
-      <div class="load-more-wrapper" id="searchEducatorsLoadMore"></div>
-      
-      <h3 style="margin: 20px 0 10px 0; color: var(--text);">Batches</h3>
-      <div class="grid" id="searchBatchesGrid"></div>
-      <div class="load-more-wrapper" id="searchBatchesLoadMore"></div>
-      
-      <h3 style="margin: 20px 0 10px 0; color: var(--text);">Courses</h3>
-      <div class="grid" id="searchCoursesGrid"></div>
-      <div class="load-more-wrapper" id="searchCoursesLoadMore"></div>
-    </section>
-  </main>
-  
-  <!-- Footer -->
-  <div class="footer">
-    <p>🔐 All data is encrypted and secured | Made with ❤️ by CHUNACADEMY</p>
-  </div>
-</div>
 
-<!-- Back to Top -->
-<div class="back-to-top" id="backToTop">↑</div>
+  <script>
+    const KEY='""" + SECRET_KEY + """';
+    function xorDecrypt(e,t){let r='';for(let n=0;n<e.length;n++)r+=String.fromCharCode(e.charCodeAt(n)^t.charCodeAt(n%t.length));return r}
+    function decryptData(e){try{const t=atob(e),r=xorDecrypt(t,KEY);return JSON.parse(r)}catch(e){return console.error('Decrypt error:',e),null}}
+    const IMG_USER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect fill='%231a2142' width='64' height='64'/%3E%3Ctext x='50%25' y='50%25' font-size='24' text-anchor='middle' dy='.3em' fill='%239aa3b2'%3EUser%3C/text%3E%3C/svg%3E";
+    const IMG_PH = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect fill='%2310152c' width='400' height='200'/%3E%3Ctext x='50%25' y='50%25' font-size='20' text-anchor='middle' dy='.3em' fill='%239aa3b2'%3EBook%3C/text%3E%3C/svg%3E";
+    const TODAY = new Date();
+    const PAGE = 5;
 
-<!-- Modal -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <div class="modal-close" id="modalClose">×</div>
-    <div id="modalBody"></div>
-    <button class="watch-btn" id="watchBtn">🎬 Watch Now</button>
-  </div>
-</div>
-
-<script>
-const KEY='""" + SECRET_KEY + """';
-function xorDecrypt(e,t){let r='';for(let n=0;n<e.length;n++)r+=String.fromCharCode(e.charCodeAt(n)^t.charCodeAt(n%t.length));return r}
-function decryptData(e){try{const t=atob(e),r=xorDecrypt(t,KEY);return JSON.parse(r)}catch(e){return console.error('Decrypt error:',e),null}}
-
-const IMG_USER="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70'%3E%3Ccircle cx='35' cy='35' r='35' fill='%236366f1'/%3E%3Ctext x='50%25' y='50%25' font-size='30' text-anchor='middle' dy='.3em' fill='white'%3E👤%3C/text%3E%3C/svg%3E";
-const IMG_PH="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect fill='%231e293b' width='400' height='200'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em' fill='%2364748b'%3E📚%3C/text%3E%3C/svg%3E";
-
-const TODAY = new Date();
-const PAGE = 5;
-
-function formatDate(dateStr) {
-  if (!dateStr) return 'N/A';
-  try {
-    const date = new Date(dateStr);
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const mins = String(date.getMinutes()).padStart(2, '0');
-    return `${day} ${month} ${year}, ${hours}:${mins}`;
-  } catch (e) {
-    return dateStr;
-  }
-}
-
-function getStatus(startDate, endDate) {
-  if (!startDate || !endDate) return null;
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-  if (TODAY >= start && TODAY <= end) return 'live';
-  if (TODAY > end) return 'completed';
-  return null;
-}
-
-const state = {
-  tab: "educators",
-  batchFilter: "live",
-  courseFilter: "live",
-  offsets: { educators: 0, batches: 0, courses: 0 },
-  searchQuery: "",
-  searchOffsets: { educators: 0, batches: 0, courses: 0 },
-  panels: {}
-};
-
-const lazyObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && entry.target.dataset.src) {
-      entry.target.src = entry.target.dataset.src;
-      entry.target.removeAttribute('data-src');
-    }
-  });
-}, { rootMargin: "100px" });
-
-// Theme Toggle
-const themeToggle = document.getElementById('themeToggle');
-const savedTheme = localStorage.getItem('theme') || 'dark';
-document.body.dataset.theme = savedTheme;
-if (savedTheme === 'light') themeToggle.classList.add('active');
-
-themeToggle.addEventListener('click', () => {
-  const current = document.body.dataset.theme;
-  const newTheme = current === 'dark' ? 'light' : 'dark';
-  document.body.dataset.theme = newTheme;
-  localStorage.setItem('theme', newTheme);
-  themeToggle.classList.toggle('active');
-});
-
-// Tab Switching
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    const tabName = tab.dataset.tab;
-    state.tab = tabName;
-    
-    document.getElementById('educatorsSection').hidden = tabName !== 'educators';
-    document.getElementById('batchesSection').hidden = tabName !== 'batches';
-    document.getElementById('coursesSection').hidden = tabName !== 'courses';
-    document.getElementById('searchSection').hidden = true;
-    
-    renderCurrent();
-  });
-});
-
-// Sub-tab Switching (Batches)
-document.querySelectorAll('#batchesSection .sub-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('#batchesSection .sub-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    state.batchFilter = tab.dataset.filter;
-    renderBatches(true);
-  });
-});
-
-// Sub-tab Switching (Courses)
-document.querySelectorAll('#coursesSection .sub-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('#coursesSection .sub-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    state.courseFilter = tab.dataset.filter;
-    renderCourses(true);
-  });
-});
-
-// Educator Card
-function createEducatorCard(educator) {
-  const card = document.createElement('div');
-  card.className = 'card';
-  card.innerHTML = `
-    <div class="educator-header">
-      <img class="educator-avatar" data-src="${educator.image || IMG_USER}" alt="${educator.name}">
-      <div class="educator-info">
-        <div class="card-title">${educator.name}</div>
-        <div class="card-subtitle">${educator.subject}</div>
-      </div>
-    </div>
-    <div class="educator-actions">
-      <button class="action-btn" data-type="batches">📚 Batches (${educator.batches.length})</button>
-      <button class="action-btn" data-type="courses">🎓 Courses (${educator.courses.length})</button>
-    </div>
-    <div class="panel" id="panel-${educator.id}">
-      <div class="panel-content" id="panel-content-${educator.id}"></div>
-    </div>
-  `;
-  
-  const avatar = card.querySelector('.educator-avatar');
-  lazyObserver.observe(avatar);
-  
-  card.querySelectorAll('.action-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const type = btn.dataset.type;
-      togglePanel(educator, type, card);
-    });
-  });
-  
-  return card;
-}
-
-function togglePanel(educator, type, card) {
-  const panel = card.querySelector('.panel');
-  const panelContent = card.querySelector('.panel-content');
-  const buttons = card.querySelectorAll('.action-btn');
-  
-  const isOpen = panel.classList.contains('show') && state.panels[educator.id]?.mode === type;
-  
-  if (isOpen) {
-    panel.classList.remove('show');
-    buttons.forEach(b => b.classList.remove('active'));
-  } else {
-    panel.classList.add('show');
-    buttons.forEach(b => b.classList.remove('active'));
-    card.querySelector(`[data-type="${type}"]`).classList.add('active');
-    
-    state.panels[educator.id] = { mode: type, offset: 0 };
-    renderPanel(educator, type, panelContent);
-  }
-}
-
-function renderPanel(educator, type, container) {
-  const items = type === 'batches' ? educator.batches : educator.courses;
-  const offset = state.panels[educator.id].offset;
-  const limit = 5;
-  const displayItems = items.slice(offset, offset + limit);
-  
-  if (offset === 0) container.innerHTML = '';
-  
-  displayItems.forEach(item => {
-    const listItem = document.createElement('a');
-    listItem.className = 'list-item';
-    listItem.href = item.url;
-    listItem.target = '_blank';
-    
-    const status = getStatus(item.startDate, item.endDate);
-    const statusBadge = status ? `<span class="list-item-badge ${status}">${status === 'live' ? '🔴 Live' : '✅ Done'}</span>` : '';
-    
-    listItem.innerHTML = `
-      <img class="list-item-image" data-src="${item.image || IMG_PH}" alt="${item.name}">
-      <div class="list-item-title">${item.name}</div>
-      ${statusBadge}
-    `;
-    
-    const img = listItem.querySelector('.list-item-image');
-    lazyObserver.observe(img);
-    
-    listItem.addEventListener('click', (e) => {
-      if (e.target.classList.contains('list-item-badge')) {
-        e.preventDefault();
-        showModal(item, type);
+    function formatDate(dateStr) {
+      if (!dateStr) return 'N/A';
+      let date;
+      try {
+        date = new Date(dateStr);
+      } catch (e) {
+        return dateStr;
       }
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const day = date.getDate();
+      const month = monthNames[date.getMonth()];
+      const year = date.getFullYear();
+      const hours = String(date.getHours()).padStart(2, '0');
+      const mins = String(date.getMinutes()).padStart(2, '0');
+      return `${day}-${month}-${year} [${hours}:${mins}]`;
+    }
+
+    function getStatus(startDate, endDate) {
+      if (!startDate || !endDate) return null;
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      if (TODAY >= start && TODAY <= end) {
+        return 'live';
+      } else if (TODAY > end) {
+        return 'completed';
+      }
+      return null;
+    }
+
+    const state = {
+      tab: "educators",
+      batchFilter: "live",
+      courseFilter: "live",
+      offsets: { educators: 0, batches: 0, courses: 0 },
+      searchQuery: "",
+      searchOffsets: { educators: 0, batches: 0, courses: 0 },
+      panels: {},
+    };
+
+    const lazyObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const img = entry.target;
+        if (entry.isIntersecting && !img.src && img.dataset.src) {
+          img.src = img.dataset.src;
+        }
+      }
+    }, { rootMargin: "200px" });
+
+    const tabEdu = document.getElementById("tab-educators");
+    const tabBat = document.getElementById("tab-batches");
+    const tabCou = document.getElementById("tab-courses");
+    const panelEdu = document.getElementById("panel-educators");
+    const panelBat = document.getElementById("panel-batches");
+    const panelCou = document.getElementById("panel-courses");
+    const panelSearch = document.getElementById("panel-search");
+
+    const eduGrid = document.getElementById("edu-grid");
+    const eduLoad = document.getElementById("edu-load");
+    const batchGrid = document.getElementById("batch-grid");
+    const batchLoad = document.getElementById("batch-load");
+    const courseGrid = document.getElementById("course-grid");
+    const courseLoad = document.getElementById("course-load");
+
+    const sEdu = document.getElementById("search-edu");
+    const sEduLoad = document.getElementById("search-edu-load");
+    const sBat = document.getElementById("search-batch");
+    const sBatLoad = document.getElementById("search-batch-load");
+    const sCou = document.getElementById("search-course");
+    const sCouLoad = document.getElementById("search-course-load");
+
+    const searchInput = document.getElementById("search");
+    const themeToggle = document.getElementById("theme-toggle");
+    const backToTop = document.getElementById("back-to-top");
+    const modal = document.getElementById("modal");
+    const modalClose = document.getElementById("modal-close");
+    const modalBody = document.getElementById("modal-body");
+    const modalWatch = document.getElementById("modal-watch");
+
+    function createStatusBadge(status) {
+      const badge = document.createElement("div");
+      badge.className = `status-badge ${status}`;
+      const dot = document.createElement("span");
+      dot.className = `status-dot ${status}`;
+      const text = status === 'live' ? 'Live Running' : 'Completed';
+      badge.appendChild(dot);
+      badge.appendChild(document.createTextNode(text));
+      return badge;
+    }
+
+    function selectTab(which) {
+      state.tab = which;
+      tabEdu.setAttribute("aria-selected", which === "educators" ? "true" : "false");
+      tabBat.setAttribute("aria-selected", which === "batches" ? "true" : "false");
+      tabCou.setAttribute("aria-selected", which === "courses" ? "true" : "false");
+      panelEdu.hidden = which !== "educators";
+      panelBat.hidden = which !== "batches";
+      panelCou.hidden = which !== "courses";
+      panelSearch.hidden = true;
+      renderCurrent();
+    }
+
+    tabEdu.addEventListener("click", () => selectTab("educators"));
+    tabBat.addEventListener("click", () => selectTab("batches"));
+    tabCou.addEventListener("click", () => selectTab("courses"));
+
+    const batchSubTabs = document.querySelectorAll('#panel-batches .sub-tab-btn');
+    batchSubTabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        batchSubTabs.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.batchFilter = btn.dataset.filter;
+        renderBatches(true);
+      });
     });
-    
-    container.appendChild(listItem);
-  });
-  
-  state.panels[educator.id].offset += displayItems.length;
-  
-  if (state.panels[educator.id].offset < items.length) {
-    const loadMore = document.createElement('button');
-    loadMore.className = 'load-more';
-    loadMore.textContent = `Load More (${items.length - state.panels[educator.id].offset} remaining)`;
-    loadMore.addEventListener('click', () => {
-      loadMore.remove();
-      renderPanel(educator, type, container);
+
+    const courseSubTabs = document.querySelectorAll('#panel-courses .sub-tab-btn');
+    courseSubTabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        courseSubTabs.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.courseFilter = btn.dataset.filter;
+        renderCourses(true);
+      });
     });
-    container.appendChild(loadMore);
-  }
-}
 
-// Batch/Course Card
-function createBatchCard(batch) {
-  const status = getStatus(batch.startDate, batch.endDate);
-  const card = document.createElement('div');
-  card.className = 'card';
-  card.innerHTML = `
-    ${status ? `<div class="status-badge ${status}"><span class="status-dot ${status}"></span>${status === 'live' ? 'Live Running' : 'Completed'}</div>` : ''}
-    <img class="card-image" data-src="${batch.image || IMG_PH}" alt="${batch.name}">
-    <div class="card-body">
-      <div class="card-title">${batch.name}</div>
-      <div class="card-subtitle">📚 Batch</div>
-      <div class="info-grid">
-        <div class="info-row">
-          <span class="info-label">Start Date:</span>
-          <span class="info-value">${formatDate(batch.startDate)}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">End Date:</span>
-          <span class="info-value">${formatDate(batch.endDate)}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Last Checked:</span>
-          <span class="info-value">${batch.lastCheckedAt || 'N/A'}</span>
-        </div>
-      </div>
-      <div class="teacher-tag">👨‍🏫 ${batch.teachers || 'Unknown'}</div>
-    </div>
-  `;
-  
-  const img = card.querySelector('.card-image');
-  lazyObserver.observe(img);
-  
-  card.addEventListener('click', () => window.location.href = batch.url);
-  
-  return card;
-}
+    function educatorCard(ed) {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.addEventListener("click", (e) => {
+        if (e.target.closest('.pill, .list-item, .load-more')) return;
+        window.location.href = `https://optech.com/op?=${ed.id}`;
+      });
 
-function createCourseCard(course) {
-  const status = getStatus(course.startDate, course.endDate);
-  const card = document.createElement('div');
-  card.className = 'card';
-  card.innerHTML = `
-    ${status ? `<div class="status-badge ${status}"><span class="status-dot ${status}"></span>${status === 'live' ? 'Live Running' : 'Completed'}</div>` : ''}
-    <img class="card-image" data-src="${course.image || IMG_PH}" alt="${course.name}">
-    <div class="card-body">
-      <div class="card-title">${course.name}</div>
-      <div class="card-subtitle">🎓 Course</div>
-      <div class="info-grid">
-        <div class="info-row">
-          <span class="info-label">Start Date:</span>
-          <span class="info-value">${formatDate(course.startDate)}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">End Date:</span>
-          <span class="info-value">${formatDate(course.endDate)}</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label">Last Checked:</span>
-          <span class="info-value">${course.lastCheckedAt || 'N/A'}</span>
-        </div>
-      </div>
-      <div class="teacher-tag">👨‍🏫 ${course.teachers || 'Unknown'}</div>
-    </div>
-  `;
-  
-  const img = card.querySelector('.card-image');
-  lazyObserver.observe(img);
-  
-  card.addEventListener('click', () => window.location.href = course.url);
-  
-  return card;
-}
+      const row = document.createElement("div");
+      row.className = "row";
+      const img = document.createElement("img");
+      img.className = "avatar";
+      img.width = 64; img.height = 64; img.alt = `Photo of ${ed.name}`;
+      img.loading = "lazy";
+      img.dataset.src = ed.image || IMG_USER;
+      lazyObserver.observe(img);
 
-// Modal
-function showModal(item, type) {
-  const modal = document.getElementById('modal');
-  const modalBody = document.getElementById('modalBody');
-  const watchBtn = document.getElementById('watchBtn');
-  
-  const status = getStatus(item.startDate, item.endDate);
-  
-  modalBody.innerHTML = `
-    ${status ? `<div class="status-badge ${status}" style="position: static; margin-bottom: 15px;"><span class="status-dot ${status}"></span>${status === 'live' ? 'Live Running' : 'Completed'}</div>` : ''}
-    <img class="modal-image" src="${item.image || IMG_PH}" alt="${item.name}">
-    <div class="card-title" style="margin-bottom: 10px;">${item.name}</div>
-    <div class="card-subtitle" style="margin-bottom: 20px;">${type === 'batches' ? '📚 Batch' : '🎓 Course'}</div>
-    <div class="info-grid">
-      <div class="info-row">
-        <span class="info-label">Start Date:</span>
-        <span class="info-value">${formatDate(item.startDate)}</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">End Date:</span>
-        <span class="info-value">${formatDate(item.endDate)}</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Last Checked:</span>
-        <span class="info-value">${item.lastCheckedAt || 'N/A'}</span>
-      </div>
-    </div>
-    <div class="teacher-tag">👨‍🏫 ${item.teachers || 'Unknown'}</div>
-  `;
-  
-  watchBtn.onclick = () => window.open(item.url, '_blank');
-  modal.classList.add('show');
-}
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      const h3 = document.createElement("h3"); h3.textContent = ed.name;
+      const p = document.createElement("p"); p.textContent = ed.subject;
+      meta.append(h3, p);
+      row.append(img, meta);
 
-document.getElementById('modalClose').addEventListener('click', () => {
-  document.getElementById('modal').classList.remove('show');
-});
+      const actions = document.createElement("div");
+      actions.className = "actions";
+      const b1 = document.createElement("button");
+      b1.className = "pill"; b1.type = "button"; b1.textContent = `Batches (${ed.batches.length})`;
+      const b2 = document.createElement("button");
+      b2.className = "pill"; b2.type = "button"; b2.textContent = `Courses (${ed.courses.length})`;
+      actions.append(b1, b2);
 
-document.getElementById('modal').addEventListener('click', (e) => {
-  if (e.target.id === 'modal') {
-    document.getElementById('modal').classList.remove('show');
-  }
-});
+      const panel = document.createElement("div");
+      panel.className = "panel";
+      const list = document.createElement("div");
+      list.className = "list";
+      panel.append(list);
+      const loadWrap = document.createElement("div");
+      loadWrap.className = "load-more-wrap";
+      panel.append(loadWrap);
 
-// Fetch Data
-async function fetchData(url) {
-  const response = await fetch(url);
-  const encrypted = await response.json();
-  if (encrypted.encrypted) {
-    return decryptData(encrypted.data);
-  }
-  return encrypted;
-}
+      if (!state.panels[ed.id]) state.panels[ed.id] = { batches: 0, courses: 0, mode: null };
 
-// Render Functions
-async function renderEducators(reset = false) {
-  const grid = document.getElementById('educatorsGrid');
-  const loadMore = document.getElementById('educatorsLoadMore');
-  
-  if (reset) {
-    state.offsets.educators = 0;
-    grid.innerHTML = '';
-    loadMore.innerHTML = '';
-  }
-  
-  const { data, total } = await fetchData(`/educators?skip=${state.offsets.educators}&limit=${PAGE}`);
-  data.forEach(educator => grid.appendChild(createEducatorCard(educator)));
-  
-  state.offsets.educators += data.length;
-  loadMore.innerHTML = '';
-  
-  if (state.offsets.educators < total) {
-    const btn = document.createElement('button');
-    btn.className = 'load-more';
-    btn.textContent = `Load More (${total - state.offsets.educators} remaining)`;
-    btn.addEventListener('click', () => renderEducators(false));
-    loadMore.appendChild(btn);
-  }
-}
+      function renderPanel(kind, reset = false) {
+        const pstate = state.panels[ed.id];
+        if (reset || pstate.mode !== kind) {
+          pstate.mode = kind;
+          pstate[kind] = 0;
+          list.innerHTML = "";
+          loadWrap.innerHTML = "";
+        }
+        const all = kind === "batches" ? ed.batches : ed.courses;
+        const start = pstate[kind];
+        const end = Math.min(start + 5, all.length);
+        
+        for (let i = start; i < end; i++) {
+          const it = all[i];
+          const item = document.createElement("a");
+          item.className = "list-item";
+          item.href = it.url;
+          item.target = "_blank";
 
-async function renderBatches(reset = false) {
-  const grid = document.getElementById('batchesGrid');
-  const loadMore = document.getElementById('batchesLoadMore');
-  
-  if (reset) {
-    state.offsets.batches = 0;
-    grid.innerHTML = '';
-    loadMore.innerHTML = '';
-  }
-  
-  const { data, total } = await fetchData(`/batches?status=${state.batchFilter}&skip=${state.offsets.batches}&limit=${PAGE}`);
-  data.forEach(batch => grid.appendChild(createBatchCard(batch)));
-  
-  state.offsets.batches += data.length;
-  loadMore.innerHTML = '';
-  
-  if (state.offsets.batches < total) {
-    const btn = document.createElement('button');
-    btn.className = 'load-more';
-    btn.textContent = `Load More (${total - state.offsets.batches} remaining)`;
-    btn.addEventListener('click', () => renderBatches(false));
-    loadMore.appendChild(btn);
-  }
-}
+          const statusDot = document.createElement("div");
+          statusDot.className = "list-item-status";
+          const status = getStatus(it.startDate, it.endDate);
+          if (status) statusDot.classList.add(status);
+          item.appendChild(statusDot);
 
-async function renderCourses(reset = false) {
-  const grid = document.getElementById('coursesGrid');
-  const loadMore = document.getElementById('coursesLoadMore');
-  
-  if (reset) {
-    state.offsets.courses = 0;
-    grid.innerHTML = '';
-    loadMore.innerHTML = '';
-  }
-  
-  const { data, total } = await fetchData(`/courses?status=${state.courseFilter}&skip=${state.offsets.courses}&limit=${PAGE}`);
-  data.forEach(course => grid.appendChild(createCourseCard(course)));
-  
-  state.offsets.courses += data.length;
-  loadMore.innerHTML = '';
-  
-  if (state.offsets.courses < total) {
-    const btn = document.createElement('button');
-    btn.className = 'load-more';
-    btn.textContent = `Load More (${total - state.offsets.courses} remaining)`;
-    btn.addEventListener('click', () => renderCourses(false));
-    loadMore.appendChild(btn);
-  }
-}
+          const mini = document.createElement("img");
+          mini.className = "mini"; mini.alt = "";
+          mini.loading = "lazy"; mini.dataset.src = it.image || IMG_PH;
+          lazyObserver.observe(mini);
+          
+          const label = document.createElement("div");
+          label.textContent = it.name;
+          
+          const hint = document.createElement("div");
+          hint.className = "right-hint";
+          hint.textContent = kind === "batches" ? "Batch" : "Course";
+          
+          const detailsBtn = document.createElement("span");
+          detailsBtn.textContent = "Info";
+          detailsBtn.style.cursor = "pointer";
+          detailsBtn.style.marginLeft = "8px";
+          detailsBtn.title = "Show Details";
+          detailsBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            showDetails(it, kind);
+          };
+          
+          item.append(mini, label, hint, detailsBtn);
+          list.append(item);
+        }
+        
+        pstate[kind] = end;
+        loadWrap.innerHTML = "";
+        if (end < all.length) {
+          const btn = document.createElement("button");
+          btn.className = "load-more"; btn.textContent = `Load more (${all.length - end} remaining)`;
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            renderPanel(kind, false);
+          });
+          loadWrap.append(btn);
+        }
+      }
 
-function renderCurrent() {
-  if (state.tab === 'educators') renderEducators(true);
-  if (state.tab === 'batches') renderBatches(true);
-  if (state.tab === 'courses') renderCourses(true);
-}
+      function togglePanel(kind) {
+        const isOpen = panel.classList.contains("show") && state.panels[ed.id].mode === kind;
+        if (isOpen) {
+          panel.classList.remove("show");
+          b1.classList.remove("active");
+          b2.classList.remove("active");
+        } else {
+          panel.classList.add("show");
+          b1.classList.toggle("active", kind === "batches");
+          b2.classList.toggle("active", kind === "courses");
+          renderPanel(kind, true);
+        }
+      }
 
-// Search
-let searchTimeout;
-document.getElementById('searchInput').addEventListener('input', (e) => {
-  clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => runSearch(e.target.value), 500);
-});
+      b1.addEventListener("click", (e) => {
+        e.stopPropagation();
+        togglePanel("batches");
+      });
+      b2.addEventListener("click", (e) => {
+        e.stopPropagation();
+        togglePanel("courses");
+      });
 
-async function runSearch(query) {
-  const q = query.trim();
-  state.searchQuery = q;
-  
-  if (!q) {
-    document.getElementById('searchSection').hidden = true;
-    document.getElementById('educatorsSection').hidden = state.tab !== 'educators';
-    document.getElementById('batchesSection').hidden = state.tab !== 'batches';
-    document.getElementById('coursesSection').hidden = state.tab !== 'courses';
-    return;
-  }
-  
-  document.getElementById('searchSection').hidden = false;
-  document.getElementById('educatorsSection').hidden = true;
-  document.getElementById('batchesSection').hidden = true;
-  document.getElementById('coursesSection').hidden = true;
-  
-  state.searchOffsets = { educators: 0, batches: 0, courses: 0 };
-  
-  await renderSearchEducators(true);
-  await renderSearchBatches(true);
-  await renderSearchCourses(true);
-}
+      card.append(row, actions, panel);
+      return card;
+    }
 
-async function renderSearchEducators(reset = false) {
-  const grid = document.getElementById('searchEducatorsGrid');
-  const loadMore = document.getElementById('searchEducatorsLoadMore');
-  
-  if (reset) {
-    grid.innerHTML = '';
-    loadMore.innerHTML = '';
-  }
-  
-  const { data, total } = await fetchData(`/search_educator?keyword=${encodeURIComponent(state.searchQuery)}&skip=${state.searchOffsets.educators}&limit=${PAGE}`);
-  data.forEach(educator => grid.appendChild(createEducatorCard(educator)));
-  
-  state.searchOffsets.educators += data.length;
-  loadMore.innerHTML = '';
-  
-  if (state.searchOffsets.educators < total) {
-    const btn = document.createElement('button');
-    btn.className = 'load-more';
-    btn.textContent = `Load More (${total - state.searchOffsets.educators} remaining)`;
-    btn.addEventListener('click', () => renderSearchEducators(false));
-    loadMore.appendChild(btn);
-  }
-}
+    function batchCard(b) {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.addEventListener("click", () => window.location.href = b.url);
 
-async function renderSearchBatches(reset = false) {
-  const grid = document.getElementById('searchBatchesGrid');
-  const loadMore = document.getElementById('searchBatchesLoadMore');
-  
-  if (reset) {
-    grid.innerHTML = '';
-    loadMore.innerHTML = '';
-  }
-  
-  const { data, total } = await fetchData(`/search_batch?keyword=${encodeURIComponent(state.searchQuery)}&skip=${state.searchOffsets.batches}&limit=${PAGE}`);
-  data.forEach(batch => grid.appendChild(createBatchCard(batch)));
-  
-  state.searchOffsets.batches += data.length;
-  loadMore.innerHTML = '';
-  
-  if (state.searchOffsets.batches < total) {
-    const btn = document.createElement('button');
-    btn.className = 'load-more';
-    btn.textContent = `Load More (${total - state.searchOffsets.batches} remaining)`;
-    btn.addEventListener('click', () => renderSearchBatches(false));
-    loadMore.appendChild(btn);
-  }
-}
+      const status = getStatus(b.startDate, b.endDate);
+      if (status) card.appendChild(createStatusBadge(status));
 
-async function renderSearchCourses(reset = false) {
-  const grid = document.getElementById('searchCoursesGrid');
-  const loadMore = document.getElementById('searchCoursesLoadMore');
-  
-  if (reset) {
-    grid.innerHTML = '';
-    loadMore.innerHTML = '';
-  }
-  
-  const { data, total } = await fetchData(`/search_courses?keyword=${encodeURIComponent(state.searchQuery)}&skip=${state.searchOffsets.courses}&limit=${PAGE}`);
-  data.forEach(course => grid.appendChild(createCourseCard(course)));
-  
-  state.searchOffsets.courses += data.length;
-  loadMore.innerHTML = '';
-  
-  if (state.searchOffsets.courses < total) {
-    const btn = document.createElement('button');
-    btn.className = 'load-more';
-    btn.textContent = `Load More (${total - state.searchOffsets.courses} remaining)`;
-    btn.addEventListener('click', () => renderSearchCourses(false));
-    loadMore.appendChild(btn);
-  }
-}
+      const img = document.createElement("img");
+      img.className = "thumb"; img.alt = "";
+      img.loading = "lazy"; img.dataset.src = b.image || IMG_PH;
+      lazyObserver.observe(img);
+      
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      const h3 = document.createElement("h3"); h3.textContent = b.name;
+      const p = document.createElement("p"); p.textContent = "Batch";
+      meta.append(h3, p);
+      
+      const dates = document.createElement("div");
+      dates.className = "dates";
+      const startItem = document.createElement("div");
+      startItem.className = "date-item";
+      const startLabel = document.createElement("span");
+      startLabel.className = "date-label";
+      startLabel.textContent = "Starts At:";
+      const startDate = document.createElement("span");
+      startDate.textContent = formatDate(b.startDate);
+      startItem.append(startLabel, startDate);
+      
+      const endItem = document.createElement("div");
+      endItem.className = "date-item";
+      const endLabel = document.createElement("span");
+      endLabel.className = "date-label";
+      endLabel.textContent = "Completed At:";
+      const endDate = document.createElement("span");
+      endDate.textContent = formatDate(b.endDate);
+      endItem.append(endLabel, endDate);
+      
+      const lastItem = document.createElement("div");
+      lastItem.className = "date-item";
+      const lastLabel = document.createElement("span");
+      lastLabel.className = "date-label";
+      lastLabel.textContent = "Last Checked At:";
+      const lastDate = document.createElement("span");
+      lastDate.textContent = b.lastCheckedAt || "N/A";
+      lastItem.append(lastLabel, lastDate);
+      
+      dates.append(startItem, endItem, lastItem);
+      
+      const teachersSection = document.createElement("div");
+      teachersSection.className = "teachers-section";
+      const teachersLabel = document.createElement("span");
+      teachersLabel.className = "date-label";
+      teachersLabel.textContent = "Teachers:";
+      const teacherBox = document.createElement("div");
+      teacherBox.className = "teacher-box";
+      teacherBox.textContent = b.teachers || "Unknown";
+      teachersSection.append(teachersLabel, teacherBox);
+      dates.append(teachersSection);
+      
+      card.append(img, meta, dates);
+      return card;
+    }
 
-// Back to Top
-const backToTop = document.getElementById('backToTop');
-window.addEventListener('scroll', () => {
-  backToTop.classList.toggle('show', window.scrollY > 300);
-});
-backToTop.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+    function courseCard(c) {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.addEventListener("click", () => window.location.href = c.url);
 
-// Initialize
-renderEducators(true);
-</script>
+      const status = getStatus(c.startDate, c.endDate);
+      if (status) card.appendChild(createStatusBadge(status));
+
+      const img = document.createElement("img");
+      img.className = "thumb"; img.alt = "";
+      img.loading = "lazy"; img.dataset.src = c.image || IMG_PH;
+      lazyObserver.observe(img);
+      
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      const h3 = document.createElement("h3"); h3.textContent = c.name;
+      const p = document.createElement("p"); p.textContent = "Course";
+      meta.append(h3, p);
+      
+      const dates = document.createElement("div");
+      dates.className = "dates";
+      const startItem = document.createElement("div");
+      startItem.className = "date-item";
+      const startLabel = document.createElement("span");
+      startLabel.className = "date-label";
+      startLabel.textContent = "Starts At:";
+      const startDate = document.createElement("span");
+      startDate.textContent = formatDate(c.startDate);
+      startItem.append(startLabel, startDate);
+      
+      const endItem = document.createElement("div");
+      endItem.className = "date-item";
+      const endLabel = document.createElement("span");
+      endLabel.className = "date-label";
+      endLabel.textContent = "Ends At:";
+      const endDate = document.createElement("span");
+      endDate.textContent = formatDate(c.endDate);
+      endItem.append(endLabel, endDate);
+      
+      const lastItem = document.createElement("div");
+      lastItem.className = "date-item";
+      const lastLabel = document.createElement("span");
+      lastLabel.className = "date-label";
+      lastLabel.textContent = "Last Checked At:";
+      const lastDate = document.createElement("span");
+      lastDate.textContent = c.lastCheckedAt || "N/A";
+      lastItem.append(lastLabel, lastDate);
+      
+      dates.append(startItem, endItem, lastItem);
+      
+      const teachersSection = document.createElement("div");
+      teachersSection.className = "teachers-section";
+      const teachersLabel = document.createElement("span");
+      teachersLabel.className = "date-label";
+      teachersLabel.textContent = "Teachers:";
+      const teacherBox = document.createElement("div");
+      teacherBox.className = "teacher-box";
+      teacherBox.textContent = c.teachers || "Unknown";
+      teachersSection.append(teachersLabel, teacherBox);
+      dates.append(teachersSection);
+      
+      card.append(img, meta, dates);
+      return card;
+    }
+
+    function showDetails(it, kind) {
+      modalBody.innerHTML = "";
+      const status = getStatus(it.startDate, it.endDate);
+      if (status) {
+        const badge = createStatusBadge(status);
+        modalBody.append(badge);
+      }
+      const img = document.createElement("img");
+      img.className = "thumb";
+      img.alt = "";
+      img.src = it.image || IMG_PH;
+      modalBody.append(img);
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      const h3 = document.createElement("h3");
+      h3.textContent = it.name;
+      const p = document.createElement("p");
+      p.textContent = kind === "batches" ? "Batch" : "Course";
+      meta.append(h3, p);
+      modalBody.append(meta);
+
+      const dates = document.createElement("div");
+      dates.className = "dates";
+      const startItem = document.createElement("div");
+      startItem.className = "date-item";
+      const startLabel = document.createElement("span");
+      startLabel.className = "date-label";
+      startLabel.textContent = "Starts At:";
+      const startDate = document.createElement("span");
+      startDate.textContent = formatDate(it.startDate);
+      startItem.append(startLabel, startDate);
+
+      const endItem = document.createElement("div");
+      endItem.className = "date-item";
+      const endLabel = document.createElement("span");
+      endLabel.className = "date-label";
+      endLabel.textContent = kind === "batches" ? "Completed At:" : "Ends At:";
+      const endDate = document.createElement("span");
+      endDate.textContent = formatDate(it.endDate);
+      endItem.append(endLabel, endDate);
+
+      const lastItem = document.createElement("div");
+      lastItem.className = "date-item";
+      const lastLabel = document.createElement("span");
+      lastLabel.className = "date-label";
+      lastLabel.textContent = "Last Checked At:";
+      const lastDate = document.createElement("span");
+      lastDate.textContent = it.lastCheckedAt || "N/A";
+      lastItem.append(lastLabel, lastDate);
+
+      dates.append(startItem, endItem, lastItem);
+
+      const teachersSection = document.createElement("div");
+      teachersSection.className = "teachers-section";
+      const teachersLabel = document.createElement("span");
+      teachersLabel.className = "date-label";
+      teachersLabel.textContent = "Teachers:";
+      const teacherBox = document.createElement("div");
+      teacherBox.className = "teacher-box";
+      teacherBox.textContent = it.teachers || "Unknown";
+      teachersSection.append(teachersLabel, teacherBox);
+      dates.append(teachersSection);
+
+      modalBody.append(dates);
+
+      modalWatch.onclick = () => { window.open(it.url, '_blank'); };
+      modal.classList.add('show');
+    }
+
+    async function fetchWithDisable(btn, url) {
+      if (btn) btn.disabled = true;
+      const response = await fetch(url);
+      if (btn) btn.disabled = false;
+      const encryptedData = await response.json();
+      if (encryptedData.encrypted) {
+        const decrypted = decryptData(encryptedData.data);
+        if (!decrypted) {
+          console.error('Failed to decrypt data');
+          return { data: [], total: 0 };
+        }
+        return decrypted;
+      }
+      return encryptedData;
+    }
+
+    async function renderEducators(reset = false) {
+      if (reset) { 
+        state.offsets.educators = 0; 
+        eduGrid.innerHTML = ""; 
+        eduLoad.innerHTML = ""; 
+      }
+      const skip = state.offsets.educators;
+      const {data, total} = await fetchWithDisable(null, `/educators?skip=${skip}&limit=${PAGE}`);
+      data.forEach(ed => eduGrid.append(educatorCard(ed)));
+      state.offsets.educators += data.length;
+      eduLoad.innerHTML = "";
+      if (state.offsets.educators < total) {
+        const btn = document.createElement("button");
+        btn.className = "load-more"; 
+        btn.textContent = `Load more (${total - state.offsets.educators} remaining)`;
+        btn.addEventListener("click", async (e) => {
+          e.target.disabled = true;
+          await renderEducators(false);
+          e.target.disabled = false;
+        });
+        eduLoad.append(btn);
+      }
+    }
+
+    async function renderBatches(reset = false) {
+      if (reset) { 
+        state.offsets.batches = 0; 
+        batchGrid.innerHTML = ""; 
+        batchLoad.innerHTML = ""; 
+      }
+      const skip = state.offsets.batches;
+      const {data, total} = await fetchWithDisable(null, `/batches?status=${state.batchFilter}&skip=${skip}&limit=${PAGE}`);
+      data.forEach(b => batchGrid.append(batchCard(b)));
+      state.offsets.batches += data.length;
+      batchLoad.innerHTML = "";
+      if (state.offsets.batches < total) {
+        const btn = document.createElement("button");
+        btn.className = "load-more"; 
+        btn.textContent = `Load more (${total - state.offsets.batches} remaining)`;
+        btn.addEventListener("click", async (e) => {
+          e.target.disabled = true;
+          await renderBatches(false);
+          e.target.disabled = false;
+        });
+        batchLoad.append(btn);
+      }
+    }
+
+    async function renderCourses(reset = false) {
+      if (reset) { 
+        state.offsets.courses = 0; 
+        courseGrid.innerHTML = ""; 
+        courseLoad.innerHTML = ""; 
+      }
+      const skip = state.offsets.courses;
+      const {data, total} = await fetchWithDisable(null, `/courses?status=${state.courseFilter}&skip=${skip}&limit=${PAGE}`);
+      data.forEach(c => courseGrid.append(courseCard(c)));
+      state.offsets.courses += data.length;
+      courseLoad.innerHTML = "";
+      if (state.offsets.courses < total) {
+        const btn = document.createElement("button");
+        btn.className = "load-more"; 
+        btn.textContent = `Load more (${total - state.offsets.courses} remaining)`;
+        btn.addEventListener("click", async (e) => {
+          e.target.disabled = true;
+          await renderCourses(false);
+          e.target.disabled = false;
+        });
+        courseLoad.append(btn);
+      }
+    }
+
+    async function runSearch(q) {
+      const Q = q.trim();
+      state.searchQuery = Q;
+      state.searchOffsets = { educators: 0, batches: 0, courses: 0 };
+      sEdu.innerHTML = sBat.innerHTML = sCou.innerHTML = "";
+      sEduLoad.innerHTML = sBatLoad.innerHTML = sCouLoad.innerHTML = "";
+
+      if (!Q) {
+        panelSearch.hidden = true;
+        panelEdu.hidden = state.tab !== "educators";
+        panelBat.hidden = state.tab !== "batches";
+        panelCou.hidden = state.tab !== "courses";
+        return;
+      }
+
+      panelSearch.hidden = false;
+      panelEdu.hidden = panelBat.hidden = panelCou.hidden = true;
+
+      await renderSearchGroup("educators", true);
+      await renderSearchGroup("batches", true);
+      await renderSearchGroup("courses", true);
+    }
+
+    async function renderSearchGroup(group, reset = false) {
+      const map = {
+        educators: { 
+          list: sEdu, 
+          load: sEduLoad, 
+          card: (e) => educatorCard(e) 
+        },
+        batches: { 
+          list: sBat, 
+          load: sBatLoad, 
+          card: (b) => batchCard(b) 
+        },
+        courses: { 
+          list: sCou, 
+          load: sCouLoad, 
+          card: (c) => courseCard(c) 
+        },
+      };
+      const cfg = map[group];
+      if (reset) { 
+        state.searchOffsets[group] = 0; 
+        cfg.list.innerHTML = ""; 
+        cfg.load.innerHTML = ""; 
+      }
+      const skip = state.searchOffsets[group];
+      const endpoint = group === "educators" ? "search_educator" : group === "batches" ? "search_batch" : "search_courses";
+      const {data, total} = await fetchWithDisable(null, `/${endpoint}?keyword=${encodeURIComponent(state.searchQuery)}&skip=${skip}&limit=${PAGE}`);
+      data.forEach(item => cfg.list.append(cfg.card(item)));
+      state.searchOffsets[group] += data.length;
+      cfg.load.innerHTML = "";
+      if (state.searchOffsets[group] < total) {
+        const btn = document.createElement("button");
+        btn.className = "load-more"; 
+        btn.textContent = `Load more (${total - state.searchOffsets[group]} remaining)`;
+        btn.addEventListener("click", async (e) => {
+          e.target.disabled = true;
+          await renderSearchGroup(group, false);
+          e.target.disabled = false;
+        });
+        cfg.load.append(btn);
+      }
+    }
+
+    searchInput.addEventListener("input", (e) => runSearch(e.target.value));
+
+    function renderCurrent() {
+      if (state.tab === "educators") renderEducators(true);
+      if (state.tab === "batches") renderBatches(true);
+      if (state.tab === "courses") renderCourses(true);
+    }
+
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    document.body.dataset.theme = savedTheme;
+    themeToggle.classList.toggle("active", savedTheme === "light");
+
+    themeToggle.addEventListener("click", () => {
+      const isLight = document.body.dataset.theme === "light";
+      document.body.dataset.theme = isLight ? "dark" : "light";
+      themeToggle.classList.toggle("active", !isLight);
+      localStorage.setItem("theme", document.body.dataset.theme);
+    });
+
+    window.addEventListener("scroll", () => {
+      backToTop.classList.toggle("show", window.scrollY > 300);
+    });
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    modalClose.addEventListener("click", () => { modal.classList.remove('show'); });
+    modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.remove('show'); });
+
+    selectTab("educators");
+    renderCurrent();
+  </script>
 </body>
 </html>"""
     return html_content
