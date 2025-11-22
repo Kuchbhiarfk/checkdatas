@@ -6,10 +6,10 @@ import json
 import base64
 import os
 
-app = FastAPI(title="MongoDB Data Server")
+app = FastAPI(title="HACKHEIST SERVER")
 
 # 🔐 Secret Key - CHANGE THIS!
-SECRET_KEY = "YourSuperSecret@123"
+SECRET_KEY = "TeriGandMeinLola294858@1oep&@"
 
 def xor_encrypt(data: str, key: str) -> str:
     """Simple XOR encryption"""
@@ -48,7 +48,7 @@ def map_batch(b: dict) -> dict:
         "startDate": b.get("starts_at", ""),
         "endDate": b.get("completed_at", "") or b.get("ends_at", ""),
         "lastCheckedAt": b.get("last_checked_at", ""),
-        "url": f"https://optech.com/op?={b.get('uid', '')}",
+        "url": f"https://bhundacademy-bots/?token={b.get('uid', '')}",
         "teachers": b.get("teachers", "Unknown")
     }
 
@@ -60,7 +60,7 @@ def map_course(c: dict) -> dict:
         "startDate": c.get("starts_at", ""),
         "endDate": c.get("ends_at", ""),
         "lastCheckedAt": c.get("last_checked_at", ""),
-        "url": f"https://optech.com/op?={c.get('uid', '')}",
+        "url": f"https://bhundacademy-bots/?token={c.get('uid', '')}",
         "teachers": c.get("teachers", "Unknown")
     }
 
@@ -88,7 +88,7 @@ async def root():
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>𝗖𝗛𝗨𝗡𝗔𝗖𝗔𝗗𝗘𝗠𝗬 😈</title>
+  <title>𝗕𝗛𝗨𝗡𝗗𝗔𝗖𝗔𝗗𝗘𝗠𝗬 😈</title>
   <style>
     :root{
       --bg: #0b1020;
@@ -658,7 +658,7 @@ async def root():
         <div class="brand-left">
           <div class="brand-badge" aria-hidden="true">ED</div>
           <div>
-            <div class="title">CHUNACADEMY 😈</div>
+            <div class="title">BHUNDACADEMY 😈</div>
             <p class="subtitle">Yaha pe Aapko Sabhi Batches, Courses milenge unke 😁 Enjoy...</p>
           </div>
         </div>
@@ -670,7 +670,7 @@ async def root():
           <h3 class="promo-title">𝐂𝐡𝐞𝐜𝐤𝐨𝐮𝐭 𝐎𝐮𝐫 𝐌𝐚𝐢𝐧 𝐖𝐞𝐛𝐬𝐢𝐭𝐞 ✅</h3>
           <p class="promo-text">Discover amazing free other Websites 🔥</p>
         </div>
-        <a href="https://yashyasag.github.io/hiddens" class="promo-link">Visit Now</a>
+        <a href="https://opmaster.pages.dev/" class="promo-link">Visit Now</a>
       </div>
 
       <div class="search-row" role="search">
@@ -891,7 +891,7 @@ async def root():
       card.className = "card";
       card.addEventListener("click", (e) => {
         if (e.target.closest('.pill, .list-item, .load-more')) return;
-        window.location.href = `https://optech.com/op?=${ed.id}`;
+        window.location.href = `#`;
       });
 
       const row = document.createElement("div");
