@@ -48,7 +48,7 @@ def map_batch(b: dict) -> dict:
         "startDate": b.get("starts_at", ""),
         "endDate": b.get("completed_at", "") or b.get("ends_at", ""),
         "lastCheckedAt": b.get("last_checked_at", ""),
-        "url": f"https://bhundacademy-bots/?token={b.get('uid', '')}",
+        "url": f"https://bhundacademy-bots.pages.dev/?token={b.get('uid', '')}",
         "teachers": b.get("teachers", "Unknown")
     }
 
@@ -60,7 +60,7 @@ def map_course(c: dict) -> dict:
         "startDate": c.get("starts_at", ""),
         "endDate": c.get("ends_at", ""),
         "lastCheckedAt": c.get("last_checked_at", ""),
-        "url": f"https://bhundacademy-bots/?token={c.get('uid', '')}",
+        "url": f"https://bhundacademy-bots.pages.dev/?token={c.get('uid', '')}",
         "teachers": c.get("teachers", "Unknown")
     }
 
